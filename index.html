@@ -52,7 +52,7 @@
     map.fitBounds(bounds);
 
     var colorIcons = {
-      red: new L.Icon.Default(),
+      red: new L.Icon({ iconUrl: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png', iconSize: [25, 41], iconAnchor: [12, 41] }),
       blue: new L.Icon({ iconUrl: 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', iconSize: [25, 41], iconAnchor: [12, 41] }),
       green: new L.Icon({ iconUrl: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png', iconSize: [25, 41], iconAnchor: [12, 41] }),
       orange: new L.Icon({ iconUrl: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png', iconSize: [25, 41], iconAnchor: [12, 41] }),
@@ -65,7 +65,7 @@
       const markerData = markers.map(m => ({
         latlng: m.getLatLng(),
         title: m.getPopup().getContent(),
-        color: m.options.icon.options.iconUrl || "default"
+        color: m.options.icon.options.iconUrl
       }));
       localStorage.setItem("worldMapMarkers", JSON.stringify(markerData));
     }
@@ -75,7 +75,7 @@
       if (!stored) return;
 
       JSON.parse(stored).forEach(data => {
-        const icon = Object.values(colorIcons).find(i => i.options.iconUrl === data.color) || L.Icon.Default();
+        const icon = Object.values(colorIcons).find(i => i.options.iconUrl === data.color) || colorIcons.red;
         const marker = L.marker(data.latlng, { icon: icon, draggable: true })
           .addTo(map)
           .bindPopup(data.title)
@@ -94,7 +94,7 @@
       if (!name) return;
 
       const color = markerColorSelect.value;
-      const icon = colorIcons[color] || L.Icon.Default();
+      const icon = colorIcons[color] || colorIcons.red;
       const marker = L.marker(e.latlng, { icon: icon, draggable: true })
         .addTo(map)
         .bindPopup(name)
