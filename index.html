@@ -38,8 +38,12 @@
     var image = L.imageOverlay('Worldmap.png', bounds).addTo(map);
     map.fitBounds(bounds);
 
-    // Example marker
-    
+    // Add temporary pins on click
+    map.on('click', function(e) {
+      L.marker(e.latlng).addTo(map)
+        .bindPopup("Custom Pin")
+        .openPopup();
+    });
   </script>
 </body>
 </html>
