@@ -38,13 +38,18 @@
     var image = L.imageOverlay('Worldmap.png', bounds).addTo(map);
     map.fitBounds(bounds);
 
-    // Add custom-named pin on click
+    // Add custom-named and removable pin on click
     map.on('click', function(e) {
       var pinName = prompt("Name this location:");
       if (pinName) {
-        L.marker(e.latlng).addTo(map)
+        var marker = L.marker(e.latlng).addTo(map)
           .bindPopup(pinName)
           .openPopup();
+
+        // Right-click (contextmenu) to remove the marker
+        marker.on('contextmenu', function() {
+          map.removeLayer(marker);
+        });
       }
     });
   </script>
